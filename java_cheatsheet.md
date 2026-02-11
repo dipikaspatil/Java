@@ -107,3 +107,209 @@ void reverse(int[] a, int start, int end){
         int t = a[start]; a[start++] = a[end]; a[end--] = t;
     }
 }
+
+
+## 🔹 What is a Stack?
+
+**LIFO** → **Last In, First Out**
+
+* Operations happen at the **top** of the stack
+
+### Common Uses
+
+* Parentheses checking
+* Next Greater / Smaller Element
+* Undo / Backtracking
+* Expression evaluation
+* Monotonic stack problems
+
+---
+
+## 🔹 Stack Implementation in Java
+
+### Using `Stack` class
+
+```java
+import java.util.Stack;
+
+Stack<Integer> stack = new Stack<>();
+```
+
+### Using `Deque` (✅ Preferred)
+
+```java
+import java.util.ArrayDeque;
+import java.util.Deque;
+
+Deque<Integer> stack = new ArrayDeque<>();
+```
+
+✅ Faster and **recommended over `Stack`**
+
+---
+
+## 🔹 Core Stack Operations
+
+| Operation | Stack             | Deque             |
+| --------- | ----------------- | ----------------- |
+| Push      | `stack.push(x)`   | `stack.push(x)`   |
+| Pop       | `stack.pop()`     | `stack.pop()`     |
+| Peek      | `stack.peek()`    | `stack.peek()`    |
+| Empty     | `stack.isEmpty()` | `stack.isEmpty()` |
+| Size      | `stack.size()`    | `stack.size()`    |
+
+---
+
+## 🔹 Basic Stack Template
+
+```java
+for (int x : arr) {
+    stack.push(x);
+}
+
+while (!stack.isEmpty()) {
+    int top = stack.pop();
+}
+```
+
+---
+
+## 🔹 Stack with Characters
+
+```java
+Stack<Character> stack = new Stack<>();
+
+stack.push('(');
+char ch = stack.pop();
+```
+
+---
+
+## 🔹 Parentheses Validation (Classic)
+
+```java
+public boolean isValid(String s) {
+    Stack<Character> stack = new Stack<>();
+
+    for (char c : s.toCharArray()) {
+        if (c == '(' || c == '{' || c == '[') {
+            stack.push(c);
+        } else {
+            if (stack.isEmpty()) return false;
+            char top = stack.pop();
+            if ((c == ')' && top != '(') ||
+                (c == '}' && top != '{') ||
+                (c == ']' && top != '[')) {
+                return false;
+            }
+        }
+    }
+    return stack.isEmpty();
+}
+```
+
+---
+
+## 🔹 Monotonic Stack (🔥 VERY IMPORTANT)
+
+### 🔼 Monotonic Increasing Stack
+
+* Keeps elements in **increasing order**
+* Used for **Next Smaller Element**
+
+```java
+Stack<Integer> stack = new Stack<>();
+
+for (int i = 0; i < n; i++) {
+    while (!stack.isEmpty() && stack.peek() > arr[i]) {
+        stack.pop();
+    }
+    stack.push(arr[i]);
+}
+```
+
+---
+
+### 🔽 Monotonic Decreasing Stack
+
+* Keeps elements in **decreasing order**
+* Used for **Next Greater Element**
+
+```java
+Stack<Integer> stack = new Stack<>();
+
+for (int i = 0; i < n; i++) {
+    while (!stack.isEmpty() && stack.peek() < arr[i]) {
+        stack.pop();
+    }
+    stack.push(arr[i]);
+}
+```
+
+---
+
+## 🔹 Next Greater Element (Template)
+
+```java
+int[] nge = new int[n];
+Stack<Integer> stack = new Stack<>();
+
+for (int i = n - 1; i >= 0; i--) {
+    while (!stack.isEmpty() && stack.peek() <= nums[i]) {
+        stack.pop();
+    }
+    nge[i] = stack.isEmpty() ? -1 : stack.peek();
+    stack.push(nums[i]);
+}
+```
+
+---
+
+## 🔹 Stack with Indices (Very Common)
+
+```java
+Stack<Integer> stack = new Stack<>();
+
+for (int i = 0; i < nums.length; i++) {
+    while (!stack.isEmpty() && nums[stack.peek()] > nums[i]) {
+        stack.pop();
+    }
+    stack.push(i);
+}
+```
+
+---
+
+## 🔹 Convert Stack to Array / List
+
+```java
+List<Integer> list = new ArrayList<>(stack);
+```
+
+---
+
+## 🔹 Common Stack Problems (LeetCode)
+
+* Valid Parentheses
+* Next Greater Element I / II
+* Daily Temperatures
+* Min Stack
+* Evaluate Reverse Polish Notation
+* Largest Rectangle in Histogram
+* Remove All Adjacent Duplicates
+
+---
+
+## 🔹 Time & Space Complexity
+
+* Push / Pop / Peek → **O(1)**
+* Extra space → **O(n)**
+
+---
+
+## 🔥 Interview Tips
+
+* If a problem mentions **next**, **previous**, or **nearest** → think **stack**
+* If **order matters** → use a **monotonic stack**
+* Prefer **Deque** over `Stack`
+* Use **indices** when results depend on positions

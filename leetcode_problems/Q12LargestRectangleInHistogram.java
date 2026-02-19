@@ -1,4 +1,5 @@
 // https://leetcode.com/problems/largest-rectangle-in-histogram/
+// Complexity - Hard
 /*
 Problem: Given an array of integers heights representing the histogram's bar heights, return the area of the largest rectangle in the histogram.
 

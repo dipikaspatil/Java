@@ -313,3 +313,4 @@ List<Integer> list = new ArrayList<>(stack);
 * If **order matters** → use a **monotonic stack**
 * Prefer **Deque** over `Stack`
 * Use **indices** when results depend on positions
+

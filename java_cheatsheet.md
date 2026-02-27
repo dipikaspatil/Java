@@ -314,3 +314,197 @@ List<Integer> list = new ArrayList<>(stack);
 * Prefer **Deque** over `Stack`
 * Use **indices** when results depend on positions
 
+## 1️⃣ What is a Heap?
+
+A heap is a specialized tree-based data structure that satisfies the heap property:
+
+- Max-Heap: Parent ≥ children → largest element at the root.
+- Min-Heap: Parent ≤ children → smallest element at the root.
+
+Properties:
+
+- Complete binary tree → all levels are fully filled except possibly the last, filled left to right.
+- Efficient for quickly finding min/max.
+- Commonly used in priority queues, scheduling, and graph algorithms (like Dijkstra’s).
+
+### Heap in Java
+
+Java doesn’t have a Heap class, but PriorityQueue implements a heap internally.
+
+By default, PriorityQueue is a min-heap.
+
+For max-heap, we use a custom comparator: (a, b) -> b - a.
+
+```java
+
+PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+
+PriorityQueue<Integer> maxHeap = new PriorityQueue<>((a, b) -> b - a);
+
+```
+
+- offer() - add O(log n)
+- poll() - remove O(log n)
+- peek() - O(1)
+- size() - O(1)
+- isEmpty() - O(1)
+
+Build heap from n elements - O(n)
+
+### Use Cases of Heaps
+
+- Priority Queue: Task scheduling, CPU job queues
+- Kth largest/smallest element
+- Heap sort
+- Graph algorithms: Dijkstra, Prim
+
+💡 Tip: Think of a heap as a special tree where the top is always the “priority” element, and every insert or remove automatically reorganizes to maintain the heap property. In Java, PriorityQueue handles this for you.
+
+```java
+(a, b) -> b - a // lambda expression, which is a Comparator.
+```
+
+- Comparator is what defines the ordering in the heap.
+- The lambda is shorthand for:
+
+```java
+new Comparator<Integer>() {
+    @Override
+    public int compare(Integer a, Integer b) {
+        return b - a;
+    }
+}
+```
+
+### How the Comparator Works
+
+- compare(a, b) returns:
+    - negative → a comes before b
+    - 0 → a equals b
+    - positive → a comes after b
+- b - a makes the largest number come first, so the largest element is at the top of the heap.
+
+```java
+a = 3, b = 7
+compare(a, b) = 7 - 3 = 4 → positive → 3 comes after 7 → 7 is "higher priority"
+```
+
+This effectively turns the default min-heap into a max-heap.
+
+## 1️⃣ What is a Lambda Expression?
+
+A lambda expression in Java is a short way to write an implementation of a functional interface.
+
+- Functional Interface: An interface with exactly one abstract method (e.g., Comparator, Runnable, Callable).
+- Lambda allows us to pass behavior as a parameter, instead of writing a full anonymous class.
+
+Syntax:
+
+```java
+(parameters) -> expression
+```
+
+OR 
+
+```java
+(parameters) -> { statements; }
+```
+
+### Basic Examples
+Example 1: Runnable (no parameters, no return)
+
+```java
+Runnable r = () -> System.out.println("Hello, world!");
+r.run(); // prints "Hello, world!"
+```
+
+- No parameters → ()
+- Single statement → no {} needed
+
+### Example 2: Comparator (parameters, return value)
+
+```java
+Comparator<Integer> cmp = (a, b) -> a - b; // min-heap order
+```
+
+Equivalent using anonymous class:
+
+```java
+Comparator<Integer> cmp = new Comparator<Integer>() {
+    @Override
+    public int compare(Integer a, Integer b) {
+        return a - b;
+    }
+};
+```
+
+✅ Much shorter and cleaner!
+
+### Example 3: Lambda with multiple statements
+
+```java
+Comparator<Integer> cmp = (a, b) -> {
+    System.out.println("Comparing " + a + " and " + b);
+    return b - a; // max-heap
+};
+```
+
+- Multiple statements → use {}
+- Must include explicit return if the lambda returns a value
+
+### Lambda in Heaps
+
+```java
+PriorityQueue<Integer> maxHeap = new PriorityQueue<>((a, b) -> b - a);
+```
+
+- (a, b) → two integers to compare
+- b - a → defines ordering in the heap (max-heap)
+
+Without lambda, you’d need a full anonymous class:
+
+```java
+PriorityQueue<Integer> maxHeap = new PriorityQueue<>(new Comparator<Integer>() {
+    public int compare(Integer a, Integer b) {
+        return b - a;
+    }
+});
+```
+- Lambda makes it 1 line instead of 6+ lines.
+
+### Rules of Lambda Expressions
+
+1. Functional Interface Only: Can only implement interfaces with 1 abstract method.
+2. Parameter types can often be omitted: Java can infer them.
+```java
+(a, b) -> a + b
+```
+
+3. Single statement → return implicit:
+```java
+(a, b) -> a - b  // returns a-b automatically
+```
+
+4. Multiple statements → need {} and return:
+
+```java
+(a, b) -> {
+    int diff = a - b;
+    return diff;
+}
+```
+
+### Benefits of Lambdas
+
+- Less boilerplate code
+- More readable & expressive
+- Lets you pass behavior to methods (e.g., sorting, filtering, heaps)
+- Works well with Streams API
+
+### Example with Stream API
+
+```java
+List<Integer> numbers = Arrays.asList(5, 3, 8, 1);
+numbers.sort((a, b) -> b - a); // sorts descending
+System.out.println(numbers);   // [8, 5, 3, 1]
+```

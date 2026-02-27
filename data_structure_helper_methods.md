@@ -44,3 +44,24 @@ Deque<Integer> deque = new ArrayDeque<>();
 ### Utilities:
 - isEmpty() → check if empty
 - size() → number of elements
+
+## Heap
+- default heap is min-heap
+
+```java
+
+PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+
+PriorityQueue<Integer> maxHeap = new PriorityQueue<>((a, b) -> b - a);
+
+```
+
+- offer() - add O(log n)
+- poll() - remove O(log n)
+- peek() - O(1)
+- size() - O(1)
+- isEmpty() - O(1)
+
+Build heap from n elements - O(n)
+
+

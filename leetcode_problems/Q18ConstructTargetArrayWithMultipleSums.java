@@ -1,4 +1,5 @@
 // https://leetcode.com/problems/construct-target-array-with-multiple-sums/description/
+// Hard problem
 /*
 You are given an array target of n integers. From a starting array arr consisting of n 1's, you may perform the following procedure :
 let x be the sum of all elements currently in your array.
@@ -94,6 +95,14 @@ Complete logic -
 }
 
 
+*/
+
+// Complexity Analysis
+/*
+Time Complexity: O(n log m) where n is the number of elements in target and m is the maximum element in target. 
+This is because in worst case we can have all elements of target as m and we will be doing m operations to reduce it to 1. 
+Each operation involves popping from the max heap which takes O(log n) time and we may do this up to m times in the worst case.
+Space Complexity: O(n) for the max heap.   
 */
 
 

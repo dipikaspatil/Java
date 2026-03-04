@@ -508,3 +508,114 @@ List<Integer> numbers = Arrays.asList(5, 3, 8, 1);
 numbers.sort((a, b) -> b - a); // sorts descending
 System.out.println(numbers);   // [8, 5, 3, 1]
 ```
+
+## String
+
+### Creating Strings
+```java
+String s1 = "Hello";                 // String literal (preferred)
+String s2 = new String("Hello");     // Creates new object
+```
+
+### String Immutability
+```java
+String s = "Hi";
+s.concat(" there");
+System.out.println(s); // "Hi" (unchanged)
+```
+
+### Common String Methods
+```java
+# Length & Access
+s.length();          // int
+s.charAt(0);         // char
+
+# Comparison
+s.equals("Hi");              // content comparison
+s.equalsIgnoreCase("hi");
+s == "Hi";                   // reference comparison (avoid)
+s.compareTo("Hello");        // lexicographic
+
+# Substrings
+s.substring(1);      // from index
+s.substring(1, 3);   // [1, 3)
+
+# Searching
+s.contains("i");
+s.indexOf("i");
+s.lastIndexOf("i");
+s.startsWith("H");
+s.endsWith("i");
+
+# Case Conversion
+s.toUpperCase();
+s.toLowerCase();
+
+# Replace & Remove
+s.replace("i", "a");
+s.replaceAll("\\d", "");   // regex
+s.replaceFirst("i", "a");
+s.trim();                  // removes leading/trailing spaces
+
+# Split & Join
+String[] parts = s.split(" ");
+String joined = String.join("-", parts);
+
+# String Concatenation
+String a = "Hello";
+String b = "World";
+
+String c = a + " " + b;         // simple
+String d = a.concat(" ").concat(b);
+
+# ⚠️ In loops, avoid + → use StringBuilder.
+
+# StringBuilder & StringBuffer
+
+StringBuilder sb = new StringBuilder("Hi");
+sb.append(" there");
+sb.insert(2, "!");
+sb.delete(2, 3);
+sb.reverse();
+
+String result = sb.toString();
+
+# StringBuilder → fast, not thread-safe
+
+# StringBuffer → thread-safe, slower
+
+# Checking Empty / Blank
+s.isEmpty();   // length == 0
+s.isBlank();   // Java 11+, whitespace only
+
+# Null-Safe Pattern
+if ("Hi".equals(s)) { ... }   // avoids NullPointerException
+
+# Converting To / From String
+# To String
+
+String.valueOf(10);
+String.valueOf(true);
+String.valueOf(obj);
+
+# From String
+int n = Integer.parseInt("123");
+double d = Double.parseDouble("3.14");
+
+# Escape Characters
+"\n"  // newline
+"\t"  // tab
+"\""  // double quote
+"\\"  // backslash
+
+# Useful Regex Examples
+s.matches("\\d+");       // only digits
+s.replaceAll("\\s+", " "); // normalize spaces
+
+```
+
+### Performance Tips ⚡
+
+- Use String literals when possible
+- Use StringBuilder in loops
+- Avoid unnecessary new String(...)
